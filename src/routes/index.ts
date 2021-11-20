@@ -8,9 +8,11 @@ import {
   createUser,
 } from "../controllers/user";
 import auth from "../middleware/auth";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
