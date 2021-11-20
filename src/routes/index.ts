@@ -6,6 +6,7 @@ import {
   removeByToken,
   login,
   createUser,
+  updateUserByToken,
 } from "../controllers/user";
 import auth from "../middleware/auth";
 import cors from "cors";
@@ -26,6 +27,10 @@ app.post("/login", (req: Request, res: Response) => {
 
 app.post("/user", (req: Request, res: Response) => {
   createUser(req, res);
+});
+
+app.put("/user", auth, (req: Request, res: Response) => {
+  updateUserByToken(req, res);
 });
 
 app.get("/user", auth, (req: Request, res: Response) => {
