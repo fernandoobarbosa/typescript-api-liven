@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.get("/healthcheck", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.status(200).send({ message: "Working!" });
 });
 
