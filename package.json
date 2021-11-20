@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
     "test": "jest",
-    "start": "ts-node src/server.ts"
+    "start": "node build/server.js",
+    "build": "tsc",
+    "postinstall":"yarn build"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
