@@ -5,11 +5,11 @@ services:
         build: .
         command: yarn dev
         ports: 
-            - "3000:3000"
+            - '${APP_PORT:-3000}:3000'
         volumes: 
             - .:/app
         environment: 
-            - SECRET=aac9225c92d9dd451ddc50505f67a11c
+            - SECRET=${SECRET}
             - MONGO_URI=mongodb://mongo:27017/api
         networks:
          - mongo-compose-network
