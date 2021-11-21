@@ -11,6 +11,7 @@ NodeJs REST API with typescript
 Before executing the application, make sure that you have the following prerequesites:
 
 - NodeJs
+- Yarn
 - Docker
 
 ### 1 - Configure environment variables
@@ -40,13 +41,13 @@ In your project base directory,run the command:
 In your project base directory, install all dependencies with the command:
 
 ```sh
- yarn add
+ yarn
 ```
 
 Then, simply execute the following command to start the application:
 
 ```sh
-  yarn dev
+  yarn start
 ```
 
 ### 3 - Documentation
