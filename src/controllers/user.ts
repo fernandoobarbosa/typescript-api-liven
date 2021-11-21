@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongoose";
 import User from "../models/user";
+import Address from "../models/address";
 import jwt from "jsonwebtoken";
 import hash from "object-hash";
 import jwt_decode from "jwt-decode";
 import IToken from "../interfaces/token";
+import IUser from "../interfaces/user";
 
 export const updateUserByToken = async (req: Request, res: Response) => {
   let { name, email, password } = req.body;
@@ -46,8 +48,18 @@ export const getUserByToken = async (req: Request, res: Response) => {
   const token: IToken = jwt_decode(tokenNumber ?? "");
 
   try {
+    const addresses = await Address.find({ clientId: token.id });
+
     const user = await User.findOne({ _id: token.id });
-    if (user) res.status(200).json(user);
+
+    const usertWithAddresses = {
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      addresses: addresses,
+    } as IUser;
+
+    if (user) res.status(200).json(usertWithAddresses);
 
     res.status(404).json({ message: "User not found" });
   } catch (err) {

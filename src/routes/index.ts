@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+import auth from "../middleware/auth";
+import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "../swagger.json";
 import {
@@ -8,8 +10,7 @@ import {
   createUser,
   updateUserByToken,
 } from "../controllers/user";
-import auth from "../middleware/auth";
-import cors from "cors";
+import { createAddress } from "../controllers/address";
 
 const app = express();
 app.use(express.json());
@@ -39,6 +40,10 @@ app.get("/user", auth, (req: Request, res: Response) => {
 
 app.delete("/user", auth, (req: Request, res: Response) => {
   removeByToken(req, res);
+});
+
+app.post("/address", auth, (req: Request, res: Response) => {
+  createAddress(req, res);
 });
 
 export default app;
