@@ -25,4 +25,4 @@ services:
 
 networks: 
     mongo-compose-network:
-      driver: local
+      driver: bridge
