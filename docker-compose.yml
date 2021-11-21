@@ -1,8 +1,28 @@
-# docker-compose.yml
 version: "3"
-services:
-  mongo:
-    container_name: mongo
-    image: mongo
-    ports:
-      - "27017:27017"
+
+services: 
+    app:
+        build: .
+        command: yarn dev
+        ports: 
+            - "3000:3000"
+        volumes: 
+            - .:/app
+        environment: 
+            - SECRET=aac9225c92d9dd451ddc50505f67a11c
+            - MONGO_URI=mongodb://mongo:27017/api
+        networks:
+         - mongo-compose-network
+
+    mongo:
+        image: mongo
+        ports: 
+            - "27017:27017"
+        volumes: 
+            - .:/data
+        networks:
+         - mongo-compose-network
+
+networks: 
+    mongo-compose-network:
+      driver: local
