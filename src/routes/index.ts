@@ -10,7 +10,13 @@ import {
   createUser,
   updateUserByToken,
 } from "../controllers/user";
-import { createAddress } from "../controllers/address";
+import {
+  createAddress,
+  getAddresses,
+  getAdressById,
+  removeAddressById,
+  updateAddressById,
+} from "../controllers/address";
 
 const app = express();
 app.use(express.json());
@@ -42,8 +48,24 @@ app.delete("/user", auth, (req: Request, res: Response) => {
   removeByToken(req, res);
 });
 
-app.post("/address", auth, (req: Request, res: Response) => {
+app.get("/user/address", auth, (req: Request, res: Response) => {
+  getAddresses(req, res);
+});
+
+app.get("/user/address/:id", auth, (req: Request, res: Response) => {
+  getAdressById(req, res);
+});
+
+app.post("/user/address", auth, (req: Request, res: Response) => {
   createAddress(req, res);
+});
+
+app.put("/user/address/:id", auth, (req: Request, res: Response) => {
+  updateAddressById(req, res);
+});
+
+app.delete("/user/address/:id", auth, (req: Request, res: Response) => {
+  removeAddressById(req, res);
 });
 
 export default app;

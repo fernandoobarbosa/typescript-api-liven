@@ -9,14 +9,14 @@ import IToken from "../interfaces/token";
 import IUser from "../interfaces/user";
 
 export const updateUserByToken = async (req: Request, res: Response) => {
-  let { name, email, password } = req.body;
-  const hashPassword = hash(password);
-
-  let bearerToken = req.headers.authorization;
-  let tokenNumber = bearerToken?.slice(7);
-  const token: IToken = jwt_decode(tokenNumber ?? "");
-
   try {
+    let { name, email, password } = req.body;
+    const hashPassword = hash(password);
+
+    let bearerToken = req.headers.authorization;
+    let tokenNumber = bearerToken?.slice(7);
+    const token: IToken = jwt_decode(tokenNumber ?? "");
+
     const user = await User.updateOne(
       { _id: token.id },
       { name, email, password: hashPassword }
@@ -29,10 +29,10 @@ export const updateUserByToken = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  let { name, email, password } = req.body;
-  const hashPassword = hash(password);
-
   try {
+    let { name, email, password } = req.body;
+    const hashPassword = hash(password);
+
     const user = await User.insertMany([
       { name: name, email: email, password: hashPassword },
     ]);
@@ -43,11 +43,11 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const getUserByToken = async (req: Request, res: Response) => {
-  let bearerToken = req.headers.authorization;
-  let tokenNumber = bearerToken?.slice(7);
-  const token: IToken = jwt_decode(tokenNumber ?? "");
-
   try {
+    let bearerToken = req.headers.authorization;
+    let tokenNumber = bearerToken?.slice(7);
+    const token: IToken = jwt_decode(tokenNumber ?? "");
+
     const addresses = await Address.find({ clientId: token.id });
 
     const user = await User.findOne({ _id: token.id });
@@ -68,11 +68,10 @@ export const getUserByToken = async (req: Request, res: Response) => {
 };
 
 export const removeByToken = async (req: Request, res: Response) => {
-  let bearerToken = req.headers.authorization;
-  let tokenNumber = bearerToken?.slice(7);
-  const token: IToken = jwt_decode(tokenNumber ?? "");
-
   try {
+    let bearerToken = req.headers.authorization;
+    let tokenNumber = bearerToken?.slice(7);
+    const token: IToken = jwt_decode(tokenNumber ?? "");
     const user = await User.findByIdAndRemove({ _id: token.id });
     if (user) res.status(200).json({ message: "User removed" });
     res.status(404).json({ message: "User not found" });
