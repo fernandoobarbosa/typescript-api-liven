@@ -50,16 +50,9 @@ export const getUserByToken = async (req: Request, res: Response) => {
 
     const addresses = await Address.find({ clientId: token.id });
 
-    const user = await User.findOne({ _id: token.id });
+    const user = await User.findById(token.id);
 
-    const usertWithAddresses = {
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      addresses: addresses,
-    } as IUser;
-
-    if (user) res.status(200).json(usertWithAddresses);
+    if (user) res.status(200).json({ user, addresses });
 
     res.status(404).json({ message: "User not found" });
   } catch (err) {
