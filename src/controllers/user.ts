@@ -21,7 +21,8 @@ export const updateUserByToken = async (req: Request, res: Response) => {
       { _id: token.id },
       { name, email, password: hashPassword }
     );
-    if (user) res.status(200).json({ message: "User updated" });
+    if (user.matchedCount > 0)
+      res.status(200).json({ message: "User updated" });
     res.status(404).json({ message: "User not found" });
   } catch (err) {
     res.status(500).send(err);
